@@ -1,0 +1,32 @@
+#!/bin/sh
+
+##
+# privacy removing WhereFrom metadata
+##
+
+# copy on /Library/StartupItems/priv2whereFroms/ with StartupParameters.plist
+# give executing privileges $sudo chmod 775 priv2whereFroms
+
+# 	/Users/carlos/hlab/metadatos/priv2whereFrom/prv2wf02.sh
+
+. /etc/rc.common
+
+StartService ()
+{
+	ConsoleMessage "priv2whereFroms load"
+
+}
+
+StopService ()
+{
+	ConsoleMessage "Starting priv2whereFroms"
+	/Applications/priv2whereFroms/prv2wf01.sh
+}
+
+RestartService ()
+{
+	ConsoleMessage "priv2whereFroms load"
+	/Applications/priv2whereFroms/prv2wf01.sh
+}
+
+RunService "$1"

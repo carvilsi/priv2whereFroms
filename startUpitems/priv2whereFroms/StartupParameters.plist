@@ -1,0 +1,8 @@
+{
+  Description     = "metadata whereFroms eraser";
+  Provides        = ("privacy");
+  Requires        = ("DirectoryServices");
+  Uses            = ("Disks","NFS");
+  OrderPreference = "None";
+}
+

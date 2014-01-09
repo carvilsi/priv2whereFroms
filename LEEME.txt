@@ -1,0 +1,64 @@
+												LEEME
+
+El nombre del script, prv2wf, viene de "WhereFroms to privacy" y tiene como objetivo principal eliminar de los metadatos el atributo "com.apple.metadata: kMDItemWhereFroms" de los archivos que se descargan de internet. Especialmente dedicado para ambientes "hostiles", donde este metdato puede comprometer la privacidad del usuario.
+Para tal fin ya desarrollamos otra aplicación en la típica línea de los Hacks de Jack Burton, es decir una herramienta cutre a la par que efectiva: moni2priv 
+(http://loshacksdejackburton.wordpress.com/2011/12/27/mac-os-x-navegadores-y-metadatos-wherefroms-como-librarse-de-ellos-moni2priv/). Ésta hacía uso de los kevent de manera que eliminaba los metadatos en el momento en el que se descargaba el archivo.
+Más tarde la idea evoluciona, por un lado queremos tener la posibilidad de eliminar más metadatos en diversos directorios a placer del usuario. Esto desemboca en este script.
+Para resolver estas nueva necesidad, la estrategia cambia, de manera que los metadatos, indicados por el usuario son borrados en los directorios elegidos antes de que el sistema operativo se apague (El usuario puede ejecutar el script cuando quiera). Para ello hacemos uso de los StartupItems Mac OS X (http://macdevcenter.com/pub/a/mac/2003/10/21/startup.html).
+Tanto los metadatos a borrar como los directorios donde se han de buscar se indican mediante un archivo de configuración, normalmente se encuentra en /Applications/priv2whereFroms/prv2wf.conf aunque el usuario puede indicar otro archivo mediante la opción "-c /ruta/al/archivo/de/configuraciOn" a la hora de ejecutar el script.
+El archivo de configuración tiene los siguientes elementos: path2priv, que indica los directorios donde se han de eliminar los metadatos que se indican en meta2priv. Por último logFile indica el archivo donde se realiza el logging.
+
+El archivo de configuración tiene que tener una pinta como esta:
+
+path for do logging
+logFile="/Users/jackBurton/Library/Logs/prv2wf.log"
+
+Privacy paths: the paths space separated in quotation marks (los directorios se escriben separados por espacios y entre comillas)
+path2priv = "/Users/jackBurton/Downloads /Users/jackBurton/temp /Users/jackBurton/Mail"
+
+Privacy metadata: the metadata attributes space separated in quotation marks (los metadatos se escriben separados por espacios y entre comillas)
+meta2priv = "com.apple.metadata:kMDItemWhereFroms com.apple.quarantine"
+
+El script admite una serie de opciones para realizar diferentes acciones:
+	-h muestra las opciones del script
+	-v muestra mensajes mientras se ejecuta el script, si no se indica, vuelca estos datos a la consola
+	-c usa un archivo de configuración alternativo, si no se indica, usa el habitual. Se comenta más arriba
+	-i escribe en el log los archivos intervenidos y su ruta
+
+Para usar estas opciones de manera automática modificar /Library/StartupItems/priv2whereFroms/priv2whereFroms
+
+
+											INSTALACIÓN
+
+Dos formas de instalar:
+
+1- Ejecutar el script de instalación, con sudo
+	- $ sh install_prv2wf.sh 
+		- Modificar el archivo de configuración para indicar los directorios y los metadatos a eliminar
+
+2- Completar los siguientes pasos:
+	- Crear un archivo para logging: ~/Library/Logs 
+		- Dar permisos de escritura $ sudo chmod g+w,u+w,o+w "$HOME"/Library/Logs/prv2wf.log  
+	- Copiar el directorio priv2whereFroms a /Applications
+		- Dar permisos de ejecución $ sudo chmod 775 /Applications/priv2whereFroms/prv2wf01.sh 
+	- Modificar el archivo de configuración, prv2wf.conf, para indicar los directorios y los metadatos a eliminar
+	- Copiar en /Library/StartupItems/priv2whereFroms/ los archivos [StartupParameters.plist + priv2whereFroms]
+		- Dar privilegios de ejecución $sudo chmod 0775 priv2whereFroms
+
+ 									LICENSE
+
+ 	  <prv2wf ver.1 Clear metadata that and where you want>
+    Copyright (C) <2012> <carvilsi>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
