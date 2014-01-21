@@ -1,11 +1,8 @@
 -priv2whereFroms
 
--===============
-
--
-
 -Code to keep privacy for downloads on Mac OS X
 
+    README
 
 The name of the script, prv2wf, comes from "WhereFroms to privacy" as the primordial objective of
 this was to eliminate the attributes "com.apple.metadata: kMDItemWhereFroms" of the downloaded
@@ -43,7 +40,7 @@ The script has other command line option to perform differens actions:
         
 In order to use these options in automatic script, modify /Library/StartupItems/priv2whereFroms/priv2whereFroms
 
-                                                                                        INSTALL
+    INSTALL
 
 Two ways for install:
 
@@ -60,9 +57,9 @@ Two ways for install:
         - Copy on /Library/StartupItems/priv2whereFroms/ the files [StartupParameters.plist + priv2whereFroms]
                 - Give executing privileges $sudo chmod 0775 priv2whereFroms
 
-                                                                         LICENSE
+    LICENSE
 
-          <prv2wf ver.1 Clear metadata that and where you want>
+    <prv2wf ver.1 Clear metadata that and where you want>
     Copyright (C) <2012> <carvilsi>
 
     This program is free software: you can redistribute it and/or modify
